@@ -13,32 +13,6 @@ export default function Perfil(){
   const [editId, setEditId] = useState("");
   let [editState, setEditState] = useState("none");
 
-  useEffect(() => {
-    const unsubscribe = firebase.firestore().collection('Pessoas').onSnapshot((snapshot) => {
-      const data = snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-      setPessoas(data);
-    });
-    return () => unsubscribe();
-  }, []);
-
-  const excluirPessoa = (id) => {
-    firebase.firestore().collection('Pessoas').doc(id).delete();
-  }
-
-  const atualizarPessoa = (id, dados) => {
-    firebase.firestore().collection('Pessoas').doc(id).update(dados);
-    closeEdit();
-  }
-
-  const showEdit = (id) => {
-    setEditState("flex")
-    setEditId(id)
-  }
-
-  const closeEdit = () => {
-    setEditState("none")
-    setEditId("")
-  }
 
   const renderPessoa = ({ item }) => (
     <View style={styles.pessoa}>
@@ -48,12 +22,12 @@ export default function Perfil(){
        
       </View>
       <View style={styles.acoes}>
-        <Pressable onPress={() => showEdit(item.id)}>
+        <Pressable >
           <Image style={styles.edit} source={require(
             '../assets/pencil.png',
           )}></Image>
         </Pressable>
-        <Pressable onPress={() => excluirPessoa(item.id)}>
+        <Pressable >
           <Image style={styles.trash} source={require(
             '../assets/trash.png',
           )}></Image>
@@ -64,7 +38,7 @@ export default function Perfil(){
 
   const editBox = () => {
     return(
-      <View style={[styles.editContainer, { display: editState }]}>
+      <View style={styles.editContainer}>
         <View style={styles.editBox}>
           <View >
             <Text style={styles.titletext}>Editar</Text>
@@ -85,10 +59,10 @@ export default function Perfil(){
             
           </View>
           <View style={styles.editButtons}>
-            <Pressable style={styles.editButton} onPress={closeEdit}>
+            <Pressable style={styles.editButton}>
               <Text style={styles.editButtonText}>Voltar</Text>
             </Pressable>
-            <Pressable style={styles.editButton} onPress={() => atualizarPessoa(editId, { nome, email })}>
+            <Pressable style={styles.editButton}>
               <Text style={styles.editButtonText}>Editar</Text>
             </Pressable>
           </View>
