@@ -11,7 +11,7 @@ export function CardConsulta({
     caracteristica,
 }: CardProps) {
     return(
-        <VStack w="100%"  p="5" borderRadius="lg" shadow={2} mb={5}>
+        <VStack w="100%"  p="5" borderRadius="lg"  mb={5}>
             <VStack flexDir="row" >
 
           

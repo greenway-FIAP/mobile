@@ -5,12 +5,16 @@ import { useEffect, useState } from 'react';
 import { EntradaTexto } from "../componentes/EntradaTexto";
 import { Botao } from "../componentes/Botao";
 import Logo  from './../assets/GreenwayLogo.png'
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 
 export default function Perfil({ navigation }){
 
-  
+  const logout = async() => {
+    await AsyncStorage.removeItem('token')
+    navigation.navigate('Login')
+}
   
   return (
     <>
@@ -36,15 +40,15 @@ export default function Perfil({ navigation }){
 
             <FormControl>
               <FormControl.Label>Email</FormControl.Label>
-              <EntradaTexto type="text" />
+              <EntradaTexto type="text" value="Kaique" desable />
 
 
 
               <FormControl.Label>Senha</FormControl.Label>
-              <EntradaTexto type="password" />
+              <EntradaTexto type="password" value="123" desable  />
             </FormControl>
 
-            <Botao onPress={() => navigation.navigate('Tabs') }>Atualizar</Botao>
+            <Botao onPress={logout}>Sair</Botao>
 
             <HStack mt="6" justifyContent="center">
               

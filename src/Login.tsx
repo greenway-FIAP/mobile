@@ -1,12 +1,43 @@
-import React from "react"
+import React, { useState } from "react"
 import { Box, HStack, Pressable, Icon, Center, Heading, FormControl, VStack, Input, Link, Button, Text, Image, View, ScrollView } from "native-base"
 
 import { Feather } from "@expo/vector-icons"
 import { Botao } from "../src/componentes/Botao";
 import { EntradaTexto } from "../src/componentes/EntradaTexto";
 import Logo  from './assets/GreenwayLogo.png'
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Logar({ navigation }) {
+
+  const [username, setUsername] = useState('')
+    const [password, setPassword] = useState('')
+    const [token, setToken] = useState(null)
+
+    const onSubmit = async() => {
+        await AsyncStorage.setItem('token', username)
+        if (username === 'Kaique' && password === '123') {
+            console.log('Nice')
+            navigation.navigate('Tabs')
+        }else {
+            console.log('pas tres nice ')
+        }
+    }
+
+    const tokenlogin = async() => {
+        const value = await AsyncStorage.getItem('token')
+        if (value !== null) {
+            navigation.navigate('Tabs')
+            console.log('Tu es connecté')
+        }else {
+            console.log('Tu dois te connecter')
+        }
+    }
+
+    tokenlogin()
+
+
+
+
   return <>
     <ScrollView flex={1} p={5} mt={10}>
 
@@ -32,14 +63,14 @@ export default function Logar({ navigation }) {
 
             <FormControl>
               <FormControl.Label>Email</FormControl.Label>
-              <EntradaTexto type="text" />
+              <EntradaTexto type="text" onChangeText={(value) => setUsername(value)} />
 
 
               <FormControl.Label>Senha</FormControl.Label>
-              <EntradaTexto type="password" />
+              <EntradaTexto type="password"  onChangeText={(value) => setPassword(value)} />
             </FormControl>
 
-            <Botao onPress={() => navigation.navigate('Tabs') }>Entrar</Botao>
+            <Botao onPress={onSubmit}>Entrar</Botao>
 
             <HStack mt="6" justifyContent="center">
               <Text fontSize="sm" color="coolGray.600" _dark={{
