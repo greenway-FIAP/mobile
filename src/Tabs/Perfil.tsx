@@ -1,218 +1,58 @@
-import { VStack, Text, ScrollView, Avatar, Divider } from 'native-base'
-import { FlatList, Image, Pressable, StyleSheet, View, TextInput } from 'react-native';
+import { Box, HStack, Pressable, Icon, Center, Heading, FormControl, VStack, Input, Link, Button, Text, Image, View, ScrollView } from "native-base"
+
 import { Titulo } from '../componentes/Titulo'
 import { useEffect, useState } from 'react';
-import firebase from '../../firebase';
+import { EntradaTexto } from "../componentes/EntradaTexto";
+import { Botao } from "../componentes/Botao";
+import Logo  from './../assets/GreenwayLogo.png'
 
 
-export default function Perfil(){
 
-  const [nome, setNome] = useState("")
-  const [email, setEmail] = useState("")
-  const [pessoas, setPessoas] = useState([]);
-  const [editId, setEditId] = useState("");
-  let [editState, setEditState] = useState("none");
+export default function Perfil({ navigation }){
 
-
-  const renderPessoa = ({ item }) => (
-    <View style={styles.pessoa}>
-      <View style={styles.variaveis}>
-        <Text style={styles.nome}>{`${item.nome}`}</Text>
-        <Text style={styles.nome}>{`${item.email}`}</Text>
-       
-      </View>
-      <View style={styles.acoes}>
-        <Pressable >
-          <Image style={styles.edit} source={require(
-            '../assets/pencil.png',
-          )}></Image>
-        </Pressable>
-        <Pressable >
-          <Image style={styles.trash} source={require(
-            '../assets/trash.png',
-          )}></Image>
-        </Pressable>
-      </View>
-    </View>
-  );
-
-  const editBox = () => {
-    return(
-      <View style={styles.editContainer}>
-        <View style={styles.editBox}>
-          <View >
-            <Text style={styles.titletext}>Editar</Text>
-          </View>
-          <View style={styles.editform}>
-            <TextInput
-              style={styles.input}
-              placeholder='Nome'
-              onChangeText={text => setNome(text)}
-              value={nome}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder='email'
-              onChangeText={text => setEmail(text)}
-              value={email}
-            />
-            
-          </View>
-          <View style={styles.editButtons}>
-            <Pressable style={styles.editButton}>
-              <Text style={styles.editButtonText}>Voltar</Text>
-            </Pressable>
-            <Pressable style={styles.editButton}>
-              <Text style={styles.editButtonText}>Editar</Text>
-            </Pressable>
-          </View>
-        </View>
-      </View>
-    )
-  }
+  
   
   return (
-    <View>
-      {editBox()}
-      <Titulo>Seu perfil</Titulo>
-      <FlatList
-        data={pessoas}
-        renderItem={renderPessoa}
-        keyExtractor={(item) => item.id}
-        contentContainerStyle={styles.list}
-      />
-      
-    </View>
+    <>
+    <ScrollView flex={1} p={5} mt={10}>
+
+
+      <Center w="100%" justifyItems="center">
+
+        
+        <Box safeArea p="2" py="8" w="90%" maxW="290">
+
+          <Heading size="lg" fontWeight="600" mt={10} color="green.800">
+            Perfil
+          </Heading>
+          <Heading mt="1" _dark={{
+            color: "warmGray.200"
+          }} color="coolGray.600" fontWeight="medium" size="xs">
+
+          </Heading>
+
+          <VStack space={3} mt="5">
+
+
+            <FormControl>
+              <FormControl.Label>Email</FormControl.Label>
+              <EntradaTexto type="text" />
+
+
+
+              <FormControl.Label>Senha</FormControl.Label>
+              <EntradaTexto type="password" />
+            </FormControl>
+
+            <Botao onPress={() => navigation.navigate('Tabs') }>Atualizar</Botao>
+
+            <HStack mt="6" justifyContent="center">
+              
+            </HStack>
+          </VStack>
+        </Box>
+      </Center>
+    </ScrollView>
+  </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingTop: 50,
-    height: "100%",
-    paddingBottom: 25,
-    gap: 45
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-  },
-  list: {
-    flexGrow: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%',
-  },
-  pessoa: {
-    display:"flex",
-    flexDirection: "row",
-    backgroundColor: '#eee',
-    padding: 10,
-    marginVertical: 5,
-    width: '90%',
-    borderRadius: 5,
-    alignItems: 'flex-start',
-    aspectRatio: 5,
-    justifyContent: "space-between"
-  },
-  variaveis: {
-    height: "100%",
-    gap: 5,
-  },
-  nome: {
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  cpf: {
-    fontSize: 16,
-  },
-  acoes: {
-    height: "100%",
-    gap: 5,
-  },
-  edit: {
-    height: 20,
-    width: 20,
-
-  },
-  trash: {
-    height: 25,
-    width: 25,
-    backgroundColor: '#e7131357',
-    borderRadius: 5
-  },
-  button: {
-    backgroundColor: '#007AFF',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 5,
-    alignItems: 'center',
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 16,
-  },
-  editContainer: {
-    position: "absolute",
-    left: 0,
-    right: 0,
-    alignItems: 'center',
-    zIndex: 1
-  },
-  editBox: {
-    backgroundColor: '#fff',
-    borderRadius: 5,
-    width: "80%",
-    aspectRatio: 1,
-    elevation: 5,
-    display: 'flex',
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    gap: 15
-  },
-  buttons: {
-    width: '65%',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  editButtons: {
-    width: '65%',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  editButton:{
-    backgroundColor: '#007AFF',
-    justifyContent: "center",
-    borderRadius: 5,
-    alignItems: 'center',
-    width: "35%",
-    aspectRatio: 2.10
-  },
-  editButtonText: {
-    color: '#fff',
-    fontSize: 14,
-  },
-  titletext: {
-    fontSize: 24,
-    fontWeight: 'bold',
-  },
-  input: {
-    paddingHorizontal: 12,
-    width: '65%',
-    height: 30,
-    marginVertical: 10,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 5,
-  },
-  editform: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: "100%",
-  },
-});
