@@ -12,8 +12,8 @@ export function Botao({ children, autoSize = false, color, ...rest }: ButtonProp
   return (
     <Button
       w={autoSize ? 'auto' : '100%'}
-      bg={color || 'blue.800'}
-      mt={10}
+      bg={color || 'green.400'}
+      mt={5}
       borderRadius="lg"
       _text={{ color: 'white' }}
       {...rest}
@@ -22,3 +22,4 @@ export function Botao({ children, autoSize = false, color, ...rest }: ButtonProp
     </Button>
   );
 };
+
