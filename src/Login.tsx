@@ -6,6 +6,7 @@ import { Botao } from "../src/componentes/Botao";
 import { EntradaTexto } from "../src/componentes/EntradaTexto";
 import Logo  from './assets/GreenwayLogo.png'
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import ModalTest from "./componentes/ModalTest";
 
 export default function Logar({ navigation }) {
 
@@ -16,7 +17,7 @@ export default function Logar({ navigation }) {
     const onSubmit = async() => {
         await AsyncStorage.setItem('token', username)
         if (username === 'Kaique' && password === '123') {
-            console.log('Nice')
+           
             navigation.navigate('Tabs')
         }else {
             console.log('pas tres nice ')
@@ -87,6 +88,10 @@ export default function Logar({ navigation }) {
               >
                 Cadastrar
               </Link>
+              {/* <ModalTest
+                header="tente novamente"
+                content="teste"
+              /> */}
             </HStack>
           </VStack>
         </Box>
