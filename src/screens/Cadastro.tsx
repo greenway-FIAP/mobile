@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Box, HStack, Center, Heading, FormControl, VStack, Link, Text, Image, ScrollView, Toast, Modal, Button } from "native-base";
 import { ActivityIndicator } from 'react-native';
-import { Botao } from './componentes/Botao';
-import { EntradaTexto } from './componentes/EntradaTexto';
-import Logo from './assets/GreenwayLogo.png';
-import { FIREBASE_AUTH } from "../firebase.config";
+import { Botao } from '../componentes/Botao';
+import { EntradaTexto } from '../componentes/EntradaTexto';
+import Logo from '../assets/GreenwayLogo.png';
+import { FIREBASE_AUTH } from "../../firebase.config";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 
 export default function Cadastro({ navigation }) {

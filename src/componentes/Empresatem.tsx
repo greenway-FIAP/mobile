@@ -1,22 +1,41 @@
-import React from "react";
+import React, { useContext } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import PrimaryButton from "./PrimaryButton";
 import { removeEmpresaFromApi } from "../api/empresa";
+import { EmpresasContext } from "./../context/Empresas-context";
+import { useNavigation } from "@react-navigation/native";
 
-export default function Empresatem({id, descricao, N_funcionarios, date}){
-const removeExpense = async () => {
-    await removeEmpresaFromApi(id);
-}
+ const Empresatem = ({ id, descricao, N_funcionarios, date }) => {
+    const empresasContext = useContext(EmpresasContext)
+    const navigation = useNavigation()
+    const removeEmpresa = async () => {
+        try {
+            await removeEmpresaFromApi(id);
+            empresasContext.refresh();
+        } catch (error : unknown) {
+            console.error(error);
+        }
+    }
 
-    return(
+    const goToEmpresa = () => {
+        navigation.navigate("EditEmpresa", {
+            id: id,
+        })
+    }
+
+    return (
         <View style={styles.container}>
             <Text style={styles.text}>{descricao}</Text>
             <Text style={styles.text}>{N_funcionarios}</Text>
             <Text style={styles.text}>{date}</Text>
-            <PrimaryButton text={'Excluir'} onPress={removeExpense} />
+            <PrimaryButton text={'Editar'} onPress={goToEmpresa} />
+            <PrimaryButton text={'Excluir'} onPress={removeEmpresa} />
         </View>
     )
 }
+
+
+export default Empresatem;
 
 const styles = StyleSheet.create({
     container: {

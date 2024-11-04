@@ -4,30 +4,16 @@ import { Botao } from "../componentes/Botao";
 import { EntradaTexto } from "../componentes/EntradaTexto";
 import { Titulo } from "../componentes/Titulo";
 import { CardConsulta } from '../componentes/CardAtributo'
-import { useEffect, useState } from "react";
-import { getEmpresas } from "./../api/empresa";
-import RecentEmpresas from './../componentes/RecentEmpresas'
+import { useContext, useEffect, useState } from "react";
+import { getEmpresas } from "../api/empresa";
+import RecentEmpresas from '../componentes/RecentEmpresas'
+import { EmpresasContext } from "../context/Empresas-context";
 
 export default function Principal({navigation}){
 
-
+  const empresasContext = useContext(EmpresasContext)
   const [empresas, setEmpresas] = useState([])
-  useEffect(() => {
-      const loadEmpresas = async () => {
-          const response = await getEmpresas();
-          const items = [];
-
-          Object.keys(response.data).forEach((key) => {
-              console.log(key)
-              items.push({id: key, ...response.data[key]})
-          })
-          
-          setEmpresas(items);
-      };
-
-      loadEmpresas();
-  }, []);
-
+  
 
   return (
     <ScrollView flex={1} bgColor="white">
@@ -41,7 +27,7 @@ export default function Principal({navigation}){
         onPress={() => navigation.navigate('AddEmpresa')}
       >Adicionar empresa</Botao>
 
-      <RecentEmpresas data={empresas}/>
+      <RecentEmpresas data={empresasContext.recentEmpresas}/>
 
         </VStack>
       </VStack>

@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { Box, HStack, Center, Heading, FormControl, VStack, Text, Image, View, ScrollView, Link } from "native-base";
-import { Botao } from "../src/componentes/Botao";
-import { EntradaTexto } from "./componentes/EntradaTexto";
-import Logo from './assets/GreenwayLogo.png';
+import { Botao } from "../componentes/Botao";
+import { EntradaTexto } from "../componentes/EntradaTexto";
+import Logo from '../assets/GreenwayLogo.png';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { FIREBASE_AUTH } from "../firebase.config";
+import { FIREBASE_AUTH } from "../../firebase.config";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
 
-type Props = {};
 
-export default function Logar({ navigation }: Props) {
+// interface loginProps extends <NavigationProps></NavigationProps>;
+
+export default function Logar({ navigation }) {
+  // const navigation = useNavigation();
+
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -26,7 +30,7 @@ export default function Logar({ navigation }: Props) {
       await AsyncStorage.setItem('token', userToken);
       
       // Navegar para a tela principal
-      navigation.navigate('Tabs');
+      // navigation.navigate('Principal');
     } catch (error) {
       console.error("Erro de login:", error);
       alert("Login falhou. Verifique suas credenciais.");
@@ -40,7 +44,7 @@ export default function Logar({ navigation }: Props) {
     const checkToken = async () => {
       const value = await AsyncStorage.getItem('token');
       if (value) {
-        navigation.navigate('Tabs');
+        // navigation.navigate('Tabs');
       }
     };
 
@@ -75,6 +79,7 @@ export default function Logar({ navigation }: Props) {
                 <Link
                   _text={{ color: "green.500", fontWeight: "medium", fontSize: "sm" }}
                   onPress={() => navigation.navigate('Cadastro')}
+
                 >
                   Cadastrar
                 </Link>

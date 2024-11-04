@@ -9,6 +9,15 @@ interface NewEmpresa {
   descricao: string;
   N_funcionarios: number;
   date: string;
+  userId: string;
+}
+
+interface Empresa{
+  id: string;
+  descricao: string;
+  N_funcionarios: number;
+  date: string;
+  userId: string;
 }
 
 export async function addEmpresa(empresa: NewEmpresa) {
@@ -33,13 +42,13 @@ export async function getEmpresa(id: string) {
   return axios.get(url);
 }
 
-// export async function updateEmpresa(empresa: Empresa) {
-//   const { id, ...data } = empresa;
+export async function updateEmpresa(empresa: Empresa) {
+  const { id, ...data } = empresa;
 
-//   const url = `${REALTIME_URL}/${EMPRESA_TABLE}/${id}.json`;
+  const url = `${REALTIME_URL}/${EMPRESA_TABLE}/${id}.json`;
 
-//   return axios.put(url, data);
-// }
+  return axios.put(url, data);
+}
 
 export async function removeEmpresaFromApi(id: string) {
   try {

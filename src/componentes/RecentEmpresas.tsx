@@ -2,7 +2,7 @@ import React from "react"
 import { FlatList, StyleSheet, Text, View } from 'react-native'
 import Empresatem from "./Empresatem"
 
-export default function RecentExpenses({ data }){
+export default function RecentEmpresas({ data }){
     const renderEmpresatem = ({item}) => {
         return <Empresatem {...item}/>
     }
