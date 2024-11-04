@@ -3,11 +3,31 @@ import Logo from '../assets/GreenwayLogo.png';
 import { Botao } from "../componentes/Botao";
 import { EntradaTexto } from "../componentes/EntradaTexto";
 import { Titulo } from "../componentes/Titulo";
-import { depoimentos } from "../utils/mock";
 import { CardConsulta } from '../componentes/CardAtributo'
+import { useEffect, useState } from "react";
+import { getEmpresas } from "./../api/empresa";
+import RecentEmpresas from './../componentes/RecentEmpresas'
+
+export default function Principal({navigation}){
 
 
-export default function Principal(){
+  const [empresas, setEmpresas] = useState([])
+  useEffect(() => {
+      const loadEmpresas = async () => {
+          const response = await getEmpresas();
+          const items = [];
+
+          Object.keys(response.data).forEach((key) => {
+              console.log(key)
+              items.push({id: key, ...response.data[key]})
+          })
+          
+          setEmpresas(items);
+      };
+
+      loadEmpresas();
+  }, []);
+
 
   return (
     <ScrollView flex={1} bgColor="white">
@@ -17,24 +37,12 @@ export default function Principal(){
 
         <Titulo color="blue.800" alignSelf="center" mb={4}>Caracteristicas da empresa </Titulo>
         <VStack space={3} divider={<Divider />} w="100%">
-        <CardConsulta
-        nome="N° de funcionarios"
-        caracteristica="5"
-       
-      />
+        <Botao 
+        onPress={() => navigation.navigate('AddEmpresa')}
+      >Adicionar empresa</Botao>
 
-      <CardConsulta
-        nome="N° de vacas"
-        caracteristica="555"
-       
-       
-      />
+      <RecentEmpresas data={empresas}/>
 
-        <CardConsulta
-          nome="N° hectares"
-          caracteristica="55"
-          
-        />
         </VStack>
       </VStack>
     </ScrollView>

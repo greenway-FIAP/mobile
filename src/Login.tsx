@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Box, HStack, Center, Heading, FormControl, VStack, Text, Image, View, ScrollView, Link } from "native-base";
 import { Botao } from "../src/componentes/Botao";
-import { EntradaTexto } from "../src/componentes/EntradaTexto";
+import { EntradaTexto } from "./componentes/EntradaTexto";
 import Logo from './assets/GreenwayLogo.png';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { signInWithEmailAndPassword } from "firebase/auth";
